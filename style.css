@@ -27,25 +27,24 @@ input[type="range"] {
   transform: translateY(-3px);
 }
 
-.countries-container{
+.countries-container {
   display: flex;
   flex-wrap: wrap;
   padding-top: 110px;
 }
-li{
-  display: flex ;
+li {
+  display: flex;
   flex-direction: column;
   text-align: center;
 }
 
-li img{
+li img {
   height: 50%;
   width: 50%;
   margin: 0 auto;
 }
 
-
-.card{
+.card {
   flex: 1 0 25%;
   min-width: 280px;
   /* border: 1px solid #16d9e7; */
