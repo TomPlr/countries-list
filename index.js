@@ -1,9 +1,12 @@
-
 const card = document.querySelector(".countries-container");
+const btnSort = document.querySelectorAll(".btnSort");
 
 let countries = [];
 let inputResult = "";
 let inputValueRange = "250";
+let cards = [];
+
+let sortFunct = "alpha";
 
 const fetchCountries = async (e) => {
   await fetch("https://restcountries.com/v3.1/all")
@@ -15,6 +18,17 @@ const displayCountries = async () => {
   await fetchCountries();
 
   card.innerHTML = countries
+    .sort((a, b) => {
+      if (sortFunct === "alpha") {
+        return a.translations.fra.common.localeCompare(
+          b.translations.fra.common
+        );
+      } else if (sortFunct === "minToMax") {
+        return b.population - a.population;
+      } else {
+        return a.population - b.population;
+      }
+    })
     .slice(0, inputValueRange)
     .filter((country) =>
       country.translations.fra.common.toLowerCase().includes(inputResult)
@@ -33,15 +47,17 @@ const displayCountries = async () => {
     <li class="card">
         <img src="${flag}">
         <h2>${name}</h2>
-        <p>Capital = ${capitale}</p>
-        <p>Population = ${population} hab</p>
+        <h3>${capitale}</h3>
+        <p>Population : ${population.toLocaleString()} hab</p>
     `;
     })
     .join("");
 };
 
+displayCountries();
+
 inputSearch.addEventListener("input", (e) => {
-  inputResult = e.target.value;
+  inputResult = e.target.value.toLowerCase();
   displayCountries();
 });
 
@@ -51,4 +67,9 @@ inputRange.addEventListener("input", (e) => {
   displayCountries();
 });
 
-displayCountries();
+btnSort.forEach((btn) => {
+  btn.addEventListener("click", (e) => {
+    sortFunct = e.target.id;
+    displayCountries();
+  });
+});
