@@ -6,7 +6,7 @@ let inputResult = "";
 let inputValueRange = "250";
 let cards = [];
 
-let sortFunct = "alpha";
+let sortFunct = "";
 
 const fetchCountries = async (e) => {
   await fetch("https://restcountries.com/v3.1/all")
@@ -24,9 +24,9 @@ const displayCountries = async () => {
           b.translations.fra.common
         );
       } else if (sortFunct === "minToMax") {
-        return b.population - a.population;
-      } else {
         return a.population - b.population;
+      } else {
+        return b.population - a.population;
       }
     })
     .slice(0, inputValueRange)
